@@ -1,0 +1,7 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {HttpError,id,positive,paisa,recalc,isValidIdempotency,canPortal,token,tokenHash,moneyString} from '../src/core.js';
+test('numeric guard rejects invalid quantity and IDs',()=>{assert.equal(id('12'),12);assert.throws(()=>id(-1),HttpError);assert.throws(()=>positive(0),HttpError);assert.throws(()=>positive(1.5),HttpError);assert.equal(paisa(50000),50000)});
+test('sale arithmetic is integer-safe for common amounts',()=>{assert.deepEqual(recalc([{price:330000,quantity:2},{price:60000,quantity:1}],50000,20000),{subtotal:720000,total:690000});assert.throws(()=>recalc([{price:100,quantity:1}],101,0),HttpError);assert.equal(moneyString(690000),'6900.00')});
+test('role separation limits portal login',()=>{assert.equal(canPortal({role:'cashier'},'shop'),true);assert.equal(canPortal({role:'cashier'},'warehouse'),false);assert.equal(canPortal({role:'warehouse_staff'},'shop'),false);assert.equal(canPortal({role:'warehouse_manager'},'warehouse'),true);assert.equal(canPortal({role:'admin'},'warehouse'),true)});
+test('session token is 256-bit random hex and hashed',()=>{const t=token();assert.match(t,/^[a-f0-9]{64}$/);assert.equal(tokenHash(t).length,64);assert.notEqual(tokenHash(t),t)});
+test('idempotency key validation',()=>{assert.equal(isValidIdempotency('1111111111111111'),true);assert.equal(isValidIdempotency('hi'),false);assert.equal(isValidIdempotency('!'.repeat(16)),false)});
