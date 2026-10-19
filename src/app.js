@@ -46,3 +46,6 @@ app.use((err,req,res,next)=>{
  if(res.headersSent)return next(err);
  res.status(status).json({error:status>=500&&err.status===undefined?'Server error. Check server logs.':err.message});
 });
+
+// Vercel Express preset expects a default-exported request handler.
+export default app;
