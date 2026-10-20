@@ -1,0 +1,7 @@
+/* Receipt preview is visible on screen; the actual receipt is printed in an isolated window. */
+@media print {
+  @page { margin: 0; }
+  body { background: white !important; }
+  #app, .modal-backdrop, .toast { display: none !important; }
+  #printSheet:not(:empty) { display: block !important; }
+}

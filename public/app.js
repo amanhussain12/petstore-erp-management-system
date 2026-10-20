@@ -122,7 +122,7 @@ function printReceiptOnly(data,paper='80') {
   const thermal=paper!=='a4';
   // Open synchronously in the click event to avoid the browser popup blocker.
   const win=window.open('','_blank','width=620,height=740');
-  if(!win){toast('Please allow pop-ups for localhost:3000 to print receipts.',true);return;}
+  if(!win){toast('Please allow pop-ups for this website to print receipts.',true);return;}
   const css=`@page{size:${thermal?`${size} 200mm`:'A4 portrait'};margin:0}
 *{box-sizing:border-box}html,body{background:white!important;color:black!important;margin:0!important;padding:0!important;min-height:0!important;overflow:visible!important}
 body{width:${size};max-width:100%;font-family:'Courier New',monospace;font-size:${paper==='58'?'8pt':thermal?'9pt':'11pt'};line-height:1.35}
@@ -141,7 +141,7 @@ body{width:${size};max-width:100%;font-family:'Courier New',monospace;font-size:
   win.document.open();win.document.write(html);win.document.close();
   // The print window contains only the receipt. No website/sidebar/modal HTML.
   win.focus();
-  win.setTimeout(()=>{try{win.focus();win.print();}catch(e){alert('Print failed: '+e.message)}},500);
+  win.setTimeout(()=>{try{if(!win.closed){win.focus();win.print();}}catch(e){toast('Print failed: '+e.message,true)}},500);
 }
 
 function receiptHTML(s,paper='80'){if(s.documentType==='record'){const cls=paper==='58'?'small':paper==='a4'?'a4':'';return `<div class="receipt-preview ${cls}"><h2>PET STORE ERP</h2><p class="center">${E(s.heading)}</p><div class="line"></div><p><b>Reference:</b> ${E(s.number)}</p><p><b>Date:</b> ${E(dateTime(s.date))}</p>${s.fields.map(([k,v])=>`<div class="rrow"><span>${E(k)}</span><b>${E(v)}</b></div>`).join('')}<div class="line"></div><p class="center">Warehouse operations record</p><div class="line"></div><p>Prepared by: __________________</p><p>Received by: __________________</p></div>`;}const cls=paper==='58'?'small':paper==='a4'?'a4':'';return `<div class="receipt-preview ${cls}"><h2>🐾 PET STORE</h2><div class="center">Retail & Pet Supplies<br>${E(s.heading)}</div><div class="line"></div><p><b>Receipt:</b> ${E(s.number)}</p><p><b>Date:</b> ${E(dateTime(s.date))}</p><p><b>Customer:</b> ${E(s.customer||'Walk-in')}</p>${s.phone?`<p><b>Phone:</b> ${E(s.phone)}</p>`:''}${s.address?`<p><b>Address:</b> ${E(s.address)}</p>`:''}<div class="line"></div>${s.lines.map(l=>`<p>${E(l.name)}</p><div class="rrow"><span>${l.quantity} × items</span><span>${E(s.currency)} ${rupees(l.total)}</span></div>`).join('')}<div class="line"></div><div class="rrow"><span>Subtotal</span><span>${E(s.currency)} ${rupees(s.subtotal)}</span></div>${s.discount?`<div class="rrow"><span>Discount</span><span>− ${E(s.currency)} ${rupees(s.discount)}</span></div>`:''}${s.shipping?`<div class="rrow"><span>Delivery</span><span>${E(s.currency)} ${rupees(s.shipping)}</span></div>`:''}${s.tax?`<div class="rrow"><span>Tax</span><span>${E(s.currency)} ${rupees(s.tax)}</span></div>`:''}<div class="line"></div><div class="rrow"><b>GRAND TOTAL</b><b>${E(s.currency)} ${rupees(s.total)}</b></div><div class="line"></div><p>Payment: ${E(s.payment)}</p>${s.received!==null?`<div class="rrow"><span>Received</span><span>${E(s.currency)} ${rupees(s.received)}</span></div><div class="rrow"><span>Change</span><span>${E(s.currency)} ${rupees(s.change)}</span></div>`:''}<div class="line"></div><p class="center">Thank you for shopping!<br>Visit us again.</p></div>`}

@@ -14,7 +14,8 @@
     "seed:admin": "node scripts/seed.js admin",
     "seed:demo": "node scripts/seed.js demo",
     "test": "node --test tests/*.test.js",
-    "check": "node scripts/check.js"
+    "check": "node scripts/check.js",
+    "products:import": "node scripts/import-products.js"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.3.0",

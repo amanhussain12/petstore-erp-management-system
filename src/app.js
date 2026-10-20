@@ -36,7 +36,7 @@ app.use('/api/woo',requireLogin,inRole('admin','shop_manager','cashier','warehou
 app.all('/api/*',(req,res)=>res.status(404).json({error:'API endpoint not found'}));
 const webroot=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../public');
 app.use(express.static(webroot,{maxAge:'10m'}));
-app.get('*',(req,res)=>res.sendFile(path.join(webroot,'index.html')));
+app.get('*',(req,res)=>{if(/\.[a-z0-9]{1,10}$/i.test(req.path))return res.status(404).type('text/plain').send('File not found');res.sendFile(path.join(webroot,'index.html'));});
 app.use((err,req,res,next)=>{
  let status=err.status||500;
  if(err.code==='23505'){status=409;err.message='Duplicate record (email, SKU, or unique reference already exists)';}
