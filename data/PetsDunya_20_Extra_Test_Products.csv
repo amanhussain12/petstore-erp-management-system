@@ -1,0 +1,21 @@
+sku,name,category,price
+DOG-T101,Chicken Training Treats 100g,Dog Treats,650.00
+DOG-F102,Adult Dog Dry Food 2kg,Dog Food,2950.00
+DOG-F103,Puppy Starter Food 1kg,Dog Food,1750.00
+DOG-G104,Oatmeal Dog Shampoo 250ml,Pet Grooming,990.00
+DOG-G105,Dog Grooming Brush,Pet Grooming,720.00
+DOG-A106,Adjustable Dog Collar,Dog Accessories,550.00
+DOG-A107,Dog Leash 1.5m,Dog Accessories,850.00
+DOG-T108,Rubber Chew Toy,Dog Toys,680.00
+CAT-F109,Chicken Cat Wet Food 85g,Cat Food,280.00
+CAT-F110,Salmon Cat Dry Food 1kg,Cat Food,2100.00
+CAT-T111,Catnip Mouse Toy,Cat Toys,450.00
+CAT-A112,Cat Scratching Pad,Cat Accessories,1450.00
+CAT-L113,Clumping Cat Litter 10kg,Cat Litter,3400.00
+CAT-G114,Cat Grooming Comb,Pet Grooming,590.00
+PET-B115,Stainless Steel Food Bowl,Pet Bowls,780.00
+PET-B116,Double Feeding Bowl,Pet Bowls,1100.00
+PET-H117,Pet Carrier Small,Pet Carriers,4200.00
+PET-H118,Washable Pet Bed Medium,Pet Bedding,3900.00
+BIRD-F119,Bird Seed Mix 1kg,Bird Food,950.00
+FISH-F120,Aquarium Fish Flakes 100g,Fish Food,680.00
